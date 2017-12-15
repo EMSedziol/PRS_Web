@@ -1,6 +1,7 @@
 package prs.domain;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -32,8 +33,8 @@ public class PurchaseRequest {
 	private String justification = "";
 	
 	@JsonProperty("DateNeeded")
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyy-MM-dd'T'HH:mm:ss.SSS")
-	private Timestamp dateNeeded;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+	private LocalDate dateNeeded;
 	
 	@ManyToOne
 	@JoinColumn(name="statusid")
@@ -48,7 +49,7 @@ public class PurchaseRequest {
 
 
 
-	public PurchaseRequest(User user, String description, String justification, Timestamp dateNeeded, Status status) {
+	public PurchaseRequest(User user, String description, String justification, LocalDate dateNeeded, Status status) {
 		super();
 		this.user = user;
 		this.description = description;
@@ -83,7 +84,7 @@ public class PurchaseRequest {
 		this.justification = justification;
 	}
 
-	public Timestamp getDateNeeded() {
+	public LocalDate getDateNeeded() {
 		return dateNeeded;
 	}
 
@@ -99,7 +100,7 @@ public class PurchaseRequest {
 
 
 
-	public void setDateNeeded(Timestamp dateNeeded) {
+	public void setDateNeeded(LocalDate dateNeeded) {
 		this.dateNeeded = dateNeeded;
 	}
 
