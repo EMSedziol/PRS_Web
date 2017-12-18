@@ -18,22 +18,22 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@JsonProperty("UserName")
-	private String UserName;
+	private String userName;
 	
-	@JsonProperty("Password")
-	private String PassWord;
+	@JsonProperty("password")
+	private String password;
 	
 	@JsonProperty("FirstName")
-	private String FirstName;
+	private String firstName;
 	
 	@JsonProperty("LastName")
-	private String LastName;
+	private String lastName;
 	
 	@JsonProperty("Phone")
-	private String Phone;
+	private String phone;
 	
 	@JsonProperty("Email")
-	private String Email;
+	private String email;
 	
 	@Column(name="isreviewer")
 	@JsonProperty("IsReviewer")
@@ -52,19 +52,19 @@ public class User {
 //	private Timestamp DateCreated;
 	
 	public User() {
-		UserName = "";
-		PassWord = "";
+		userName = "";
+		password = "";
 	}
 	
-	public User(String UserName, String PassWord, String FirstName, String LastName,
-			String Phone, String Email, boolean reviewer, boolean admin, boolean active) {
+	public User(String userName, String passWord, String firstName, String lastName,
+			String phone, String email, boolean reviewer, boolean admin, boolean active) {
 		setId(id);
-		setUserName(UserName);
-		setPassWord(PassWord);
-		setFirstName(FirstName);
-		setLastName(LastName);
-		setPhone(Phone);
-		setEmail(Email);
+		setUserName(userName);
+		setPassword(password);
+		setFirstName(firstName);
+		setLastName(lastName);
+		setPhone(phone);
+		setEmail(email);
 		setReviewer(reviewer);
 		setAdmin(admin);
 		setActive(active);
@@ -84,42 +84,55 @@ public class User {
 	public void setId(int rowId) {
 		this.id = rowId;
 	}
+
 	public String getUserName() {
-		return UserName;
+		return userName;
 	}
-	public void setUserName(String UserName) {
-		this.UserName = UserName;
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
+
 	public String getPassWord() {
-		return PassWord;
+		return password;
 	}
-	public void setPassWord(String PassWord) {
-		this.PassWord = PassWord;
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
+
 	public String getFirstName() {
-		return FirstName;
+		return firstName;
 	}
-	public void setFirstName(String FirstName) {
-		this.FirstName = FirstName;
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
+
 	public String getLastName() {
-		return LastName;
+		return lastName;
 	}
-	public void setLastName(String LastName) {
-		this.LastName = LastName;
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
+
 	public String getPhone() {
-		return Phone;
+		return phone;
 	}
-	public void setPhone(String Phone) {
-		this.Phone = Phone;
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
+
 	public String getEmail() {
-		return Email;
+		return email;
 	}
-	public void setEmail(String Email) {
-		this.Email = Email;
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
+
 	public boolean isReviewer() {
 		return reviewer;
 	}
@@ -138,19 +151,14 @@ public class User {
 	public void setActive(boolean active) { 
 		this.active = active;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "User [UserName=" + UserName
-				+ ", password=" + PassWord
-				+ ", FirstName=" + FirstName
-				+ ", LastName=" + LastName
-				+ ", Phone=" + Phone
-				+ ", Email=" + Email
-				+ ", reviewer=" + reviewer
-				+ ", admin=" + admin
-				+ ", active=" + active 
-				+  "]";
+		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", phone=" + phone + ", email=" + email + ", reviewer=" + reviewer
+				+ ", admin=" + admin + ", active=" + active + "]";
 	}
+	
+
 
 }

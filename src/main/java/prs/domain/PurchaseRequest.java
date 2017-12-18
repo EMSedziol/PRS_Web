@@ -5,7 +5,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,7 +25,7 @@ public class PurchaseRequest {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@ManyToOne
-	@JoinColumn(name="userid")
+	@JoinColumn(name="UserId")
 	private User user;
 	
 	@JsonProperty("Description")
@@ -33,32 +35,48 @@ public class PurchaseRequest {
 	private String justification = "";
 	
 	@JsonProperty("DateNeeded")
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
-	private LocalDate dateNeeded;
+	private Timestamp dateNeeded;
+	
+	@JsonProperty("DeliveryMode")
+	private String deliveryMode;
 	
 	@ManyToOne
-	@JoinColumn(name="statusid")
+	@JoinColumn(name="StatusId")
 	private Status status;
 	
-	/*	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinColumn(name="PurchaseRequestID")
-	private List<PurchaseRequestLineItem> lineItems;*/
+	@JsonProperty("Total")
+	private double total;
 	
-	public PurchaseRequest() {
-	}
-
-
-
-	public PurchaseRequest(User user, String description, String justification, LocalDate dateNeeded, Status status) {
+	private Timestamp submittedDate;  // not entered  by the user
+	
+	@OneToMany(mappedBy = "purchaseRequest", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	// @JoinColumn(name="PurchaseRequestID")
+	private List<PurchaseRequestLineItem> lineItems;
+	
+public PurchaseRequest(User user, String description, String justification, Timestamp dateNeeded,
+			String deliveryMode, Status status, double total) {
 		super();
 		this.user = user;
 		this.description = description;
 		this.justification = justification;
 		this.dateNeeded = dateNeeded;
+		this.deliveryMode = deliveryMode;
 		this.status = status;
+		this.total = total;
 	}
 
 
+	public PurchaseRequest() {
+	
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public User getUser() {
 		return user;
@@ -84,30 +102,56 @@ public class PurchaseRequest {
 		this.justification = justification;
 	}
 
-	public LocalDate getDateNeeded() {
+	public Timestamp getDateNeeded() {
 		return dateNeeded;
+	}
+
+	public void setDateNeeded(Timestamp dateNeeded) {
+		this.dateNeeded = dateNeeded;
+	}
+
+	public String getDeliveryMode() {
+		return deliveryMode;
+	}
+
+	public void setDeliveryMode(String deliveryMode) {
+		this.deliveryMode = deliveryMode;
 	}
 
 	public Status getStatus() {
 		return status;
 	}
 
-
-
-	public void setStatusid(Status status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 
+	public double getTotal() {
+		return total;
+	}
 
-
-	public void setDateNeeded(LocalDate dateNeeded) {
-		this.dateNeeded = dateNeeded;
+	public void setTotal(double total) {
+		this.total = total;
 	}
 
 
+	public Timestamp getSubmittedDate() {
+		return submittedDate;
+	}
+
+	public void setSubmittedDate(Timestamp submittedDate) {
+		this.submittedDate = submittedDate;
+	}
+
+
+	public List<PurchaseRequestLineItem> getLineItems() {
+		return lineItems;
+	}
+
+
+	public void setLineItems(List<PurchaseRequestLineItem> lineItems) {
+		this.lineItems = lineItems;
+	}
 	
 
-	
-	
-	
 }
