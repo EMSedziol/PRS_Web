@@ -52,22 +52,17 @@ public class PurchaseRequest {
 	@OneToMany(mappedBy = "purchaseRequest", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	// @JoinColumn(name="PurchaseRequestID")
 	private List<PurchaseRequestLineItem> lineItems;
-	
-public PurchaseRequest(User user, String description, String justification, Timestamp dateNeeded,
-			String deliveryMode, Status status, double total) {
-		super();
-		this.user = user;
-		this.description = description;
-		this.justification = justification;
-		this.dateNeeded = dateNeeded;
-		this.deliveryMode = deliveryMode;
-		this.status = status;
-		this.total = total;
-	}
-
 
 	public PurchaseRequest() {
-	
+		
+	}
+
+public PurchaseRequest(int id, User user, String description, 
+			Status status) {
+		this.id = id;
+		this.user = user;
+		this.description = description;
+		this.status = status;
 	}
 
 	public int getId() {
