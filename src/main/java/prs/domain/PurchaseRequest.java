@@ -24,45 +24,48 @@ public class PurchaseRequest {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@ManyToOne
-	@JoinColumn(name="UserId")
-	private User user;
+
+	private int userId;
 	
-	@JsonProperty("Description")
 	private String description = "";
 	
-	@JsonProperty("Justification")
 	private String justification = "";
 	
-	@JsonProperty("DateNeeded")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
 	private Timestamp dateNeeded;
 	
-	@JsonProperty("DeliveryMode")
 	private String deliveryMode;
 	
-	@ManyToOne
-	@JoinColumn(name="StatusId")
-	private Status status;
+	private int statusId;
 	
-	@JsonProperty("Total")
 	private double total;
 	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
 	private Timestamp submittedDate;  // not entered  by the user
 	
-	@OneToMany(mappedBy = "purchaseRequest", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	// @JoinColumn(name="PurchaseRequestID")
-	private List<PurchaseRequestLineItem> lineItems;
-
 	public PurchaseRequest() {
-		
+		id = 0;
+		userId = 0;
+		description = "";
+		justification = "";
+		dateNeeded = new Timestamp(System.currentTimeMillis());
+		deliveryMode = "";
+		statusId = 0;
+		total = 0.0;
+		submittedDate = new Timestamp(System.currentTimeMillis());
 	}
-
-public PurchaseRequest(int id, User user, String description, 
-			Status status) {
-		this.id = id;
-		this.user = user;
-		this.description = description;
-		this.status = status;
+	
+	public PurchaseRequest(int conId, int conUserId, String conDescription, String conJustification, Timestamp conDateNeeded,
+			String conDeliveryMode, int conStatusId, double conTotal, Timestamp conSubmittedDate) {
+		id = conId;
+		userId = conUserId;
+		description = conDescription;
+		justification = conJustification;
+		dateNeeded = conDateNeeded;
+		deliveryMode = conDeliveryMode;
+		statusId = conStatusId;
+		total = conTotal;
+		submittedDate = conSubmittedDate;
 	}
 
 	public int getId() {
@@ -73,12 +76,12 @@ public PurchaseRequest(int id, User user, String description,
 		this.id = id;
 	}
 
-	public User getUser() {
-		return user;
+	public int getUserId() {
+		return userId;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 	public String getDescription() {
@@ -113,12 +116,12 @@ public PurchaseRequest(int id, User user, String description,
 		this.deliveryMode = deliveryMode;
 	}
 
-	public Status getStatus() {
-		return status;
+	public int getStatusId() {
+		return statusId;
 	}
 
-	public void setStatus(Status status) {
-		this.status = status;
+	public void setStatusId(int statusId) {
+		this.statusId = statusId;
 	}
 
 	public double getTotal() {
@@ -129,7 +132,6 @@ public PurchaseRequest(int id, User user, String description,
 		this.total = total;
 	}
 
-
 	public Timestamp getSubmittedDate() {
 		return submittedDate;
 	}
@@ -138,14 +140,11 @@ public PurchaseRequest(int id, User user, String description,
 		this.submittedDate = submittedDate;
 	}
 
-
-	public List<PurchaseRequestLineItem> getLineItems() {
-		return lineItems;
-	}
-
-
-	public void setLineItems(List<PurchaseRequestLineItem> lineItems) {
-		this.lineItems = lineItems;
+	@Override
+	public String toString() {
+		return "PurchaseRequest [id=" + id + ", userId=" + userId + ", description=" + description + ", justification="
+				+ justification + ", dateNeeded=" + dateNeeded + ", deliveryMode=" + deliveryMode + ", statusId="
+				+ statusId + ", total=" + total + ", submittedDate=" + submittedDate + "]";
 	}
 	
 

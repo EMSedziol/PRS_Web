@@ -16,58 +16,60 @@ public class PurchaseRequestLineItem {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@ManyToOne
-	@JoinColumn(name="PurchaseRequestId")
-	private PurchaseRequest purchaseRequest;
-	
+	private int purchaseRequestId;
 	private int productID;
 	private int quantity;
 	
 	public PurchaseRequestLineItem() {
 		id = 0;
-		purchaseRequest = null;
+		purchaseRequestId = 0;
 		productID = 0;
 		quantity = 0;
 	}
 	
-	public PurchaseRequestLineItem(PurchaseRequest inPR, int inPdtID, int inQty) {
-		purchaseRequest = inPR;
-		productID = inPdtID;
-		quantity = inQty;
-	}
+	public PurchaseRequestLineItem(int conPR, int conProductId, int conQuantity) {
+		id = conPR;
+		productID = conProductId;
+		quantity = conQuantity;
+	} // note 'con' indicates constructor
 	
+	
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	@JsonIgnore
-	public PurchaseRequest getPurchaseRequest() {
-		return purchaseRequest;
+
+	public int getPurchaseRequestId() {
+		return purchaseRequestId;
 	}
-	
-	//@JsonIgnore
-	public void setPurchaseRequest(PurchaseRequest purchaseRequest) {
-		this.purchaseRequest = purchaseRequest;
+
+	public void setPurchaseRequestId(int purchaseRequestId) {
+		this.purchaseRequestId = purchaseRequestId;
 	}
 
 	public int getProductID() {
 		return productID;
 	}
+
 	public void setProductID(int productID) {
 		this.productID = productID;
 	}
+
 	public int getQuantity() {
 		return quantity;
 	}
+
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
 
 	@Override
 	public String toString() {
-		return "\npurchaseRequestLineItem [id=" + id + ", purchaseRequestID=" + purchaseRequest + ", productID="
+		return "\npurchaseRequestLineItem [id=" + id + ", purchaseRequestID=" + purchaseRequestId + ", productID="
 				+ productID + ", quantity=" + quantity + "]";
 	}
 	
