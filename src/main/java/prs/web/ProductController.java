@@ -1,7 +1,8 @@
 package prs.web;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,10 +13,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import prs.domain.Product;
 import prs.domain.ProductRepository;
+import prs.domain.User;
+import prs.util.PRSMaintenanceReturn;
 
 @Controller
 @RequestMapping(path="/Product")
-public class ProductController {
+public class ProductController extends BaseController  {
 	
 	@Autowired
 	private ProductRepository productRepository;
@@ -25,13 +28,25 @@ public class ProductController {
 		return productRepository.findAll();
 	}
 	
-	@GetMapping(path="/Get")
-	public @ResponseBody Product getProduct (@RequestParam int id) {
+	@GetMapping(path="/Get") 
+	public @ResponseBody List<Product> getProduct (@RequestParam int id) {
 		Product p = productRepository.findOne(id);
-		return p;
+		return BaseController.getReturnArray(p);
 	}
 	
-	@GetMapping(path="/Delete")
+	@PostMapping(path="/Add") // Map ONLY GET Requests
+	public @ResponseBody PRSMaintenanceReturn addNewProduct (@RequestBody Product product) {
+		try {
+			productRepository.save(product);
+			System.out.println("User has been saved " + product);
+		} catch (Exception e) {
+			product = null;
+			System.out.println("User saved:  "+ product);
+		}
+		return PRSMaintenanceReturn.getMaintReturn(product);
+	}
+	
+	/*@GetMapping(path="/Delete")
 	public @ResponseBody String getDelete(@RequestParam int id) {
 		
 		String msg = "";
@@ -56,5 +71,5 @@ public class ProductController {
         System.out.println("Product saved:  "+product);
         return product;
     }
-
+*/
 }

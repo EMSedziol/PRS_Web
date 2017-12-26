@@ -18,33 +18,40 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@ManyToOne
-	@JoinColumn(name="vendorid")
-	private Vendor vendor;
+
+	private int vendorId;
 	
-	@Column(name="productid")
-	private int productId;
-	
-	@Column(name="partnumber")
-	@JsonProperty("PartNumber")
 	private String partNumber;
 	
-	@JsonProperty("Name")
 	private String name;
 	
-	@JsonProperty("Price")
 	private double price;
 	
-	@JsonProperty("Unit")
 	private String unit;
 	
-	@Column(name="photopath")
-	@JsonProperty("Photopath")
 	private String photopath;
 
-	
 	public Product() {
-
+		id = 0;
+		vendorId = 0;
+		partNumber = "";
+		name = "";
+		price = 0.0;
+		unit = "";
+		photopath = "";
+		
+	}
+	
+	
+	public Product(int id, int vendorId, String partNumber, String name, 
+			double price, String unit, String photopath) {
+		this.id = id;
+		vendorId = 0;
+		partNumber = "";
+		name = "";
+		price = 0.0;
+		unit = "";
+		photopath = "";
 	}
 
 	public int getId() {
@@ -55,20 +62,12 @@ public class Product {
 		this.id = id;
 	}
 
-	public Vendor getVendor() {
-		return vendor;
+	public int getVendorId() {
+		return vendorId;
 	}
 
-	public void setVendor(Vendor vendor) {
-		this.vendor = vendor;
-	}
-
-	public int getProductId() {
-		return productId;
-	}
-
-	public void setProductId(int productId) {
-		this.productId = productId;
+	public void setVendorId(int vendorId) {
+		this.vendorId = vendorId;
 	}
 
 	public String getPartNumber() {
@@ -110,16 +109,14 @@ public class Product {
 	public void setPhotopath(String photopath) {
 		this.photopath = photopath;
 	}
-/*
-	public static Product getProduct() {
-		return product;
-	}*/
-	
+
+
 	@Override
 	public String toString() {
-		return "\nProduct [id=" + id + ", vendor=" + vendor + ", productId=" + productId + ", partNumber="
-				+ partNumber + ", name=" + name + ", price=" + price + ", unit=" + unit + ", photopath=" + photopath
-				+"]";
+		return "Product [id=" + id + ", vendorId=" + vendorId + ", partNumber=" + partNumber + ", name=" + name
+				+ ", price=" + price + ", unit=" + unit + ", photopath=" + photopath + "]";
 	}
+
+
 
 }

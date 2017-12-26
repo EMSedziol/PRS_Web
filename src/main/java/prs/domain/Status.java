@@ -13,7 +13,6 @@ public class Status {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@JsonProperty("uDescription")
 	private String description;
 
 	public Status() {

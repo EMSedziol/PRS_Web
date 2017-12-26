@@ -27,16 +27,16 @@ public class PurchaseRequestController {
 	}
 	
 	@PostMapping(path="/Add") // Map ONLY GET Requests
-	public @ResponseBody PurchaseRequest addNewPurchaseRequest (@RequestBody PurchaseRequest purchaseRequestLineItem) {
+	public @ResponseBody PurchaseRequest addNewPurchaseRequest (@RequestBody PurchaseRequest purchaseRequest) {
 		// @ResponseBody means the returned String is the response, not a view name
 		// @RequestParam means it is a parameter from the GET or POST request
 		// submittedDate cannot be null so setting here as initial submit date.
 		//   per business rules we will need to re-set this when line items are done.
 		Timestamp ts = new Timestamp(System.currentTimeMillis());
-		purchaseRequestLineItem.setSubmittedDate(ts);
-		purchaserequestRepository.save(purchaseRequestLineItem);
-		System.out.println("PurchaseRequest saved:  "+purchaseRequestLineItem);
-		return purchaseRequestLineItem;
+		purchaseRequest.setSubmittedDate(ts);
+		purchaserequestRepository.save(purchaseRequest);
+		System.out.println("PurchaseRequest saved:  "+purchaseRequest);
+		return purchaseRequest;
 	}
 	
 	@GetMapping(path="/Remove") // Map ONLY GET Requests

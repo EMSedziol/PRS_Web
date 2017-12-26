@@ -1,17 +1,20 @@
 package prs.web;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import prs.domain.User;
-import prs.domain.UserRepository;
 import prs.domain.Vendor;
 import prs.domain.VendorRepository;
+import prs.web.BaseController;
 
 @Controller
 @RequestMapping(path="/Vendor")
@@ -36,5 +39,11 @@ public class VendorController {
         System.out.println("Vendor saved:  "+vendor);
         return vendor;
     }
+	
+	@GetMapping(path="/Get") 
+	public @ResponseBody List<Vendor> getVendor (@RequestParam int id) {
+		Vendor p = vendorRepository.findOne(id);
+		return BaseController.getReturnArray(p);
+	}
 	
 }

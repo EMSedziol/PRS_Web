@@ -1,73 +1,44 @@
 package prs.domain;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 public class Vendor {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@JsonProperty("Code")
 	private String code;
-	
-	@JsonProperty("Name")
 	private String name;
-	
-	@JsonProperty("Address")
 	private String address;
-	
-	@JsonProperty("City")
 	private String city;
-	
-	@JsonProperty("State")
 	private String state;
-	
-	@JsonProperty("Zip")
 	private String zip;
-	
-	@JsonProperty("Phone")
 	private String phone;
-	
-	@JsonProperty("Email")
 	private String email;
-	@JsonProperty("IsPreApproved")
-	@Column(name="ispreapproved")
-	private boolean isPreApproved;
-	
-	@JsonProperty("IsActive")
-	@Column(name="isactive")
-	private boolean isActive;
-	
-	@OneToMany(mappedBy = "vendor", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-//	@JoinColumn(name="productId")  replaced by mappedBy in Spring
-	@JsonIgnore  //
-	private List<Product> products;  // this needs getter/setters in this class
-	
-/*	SELECT v.name, v.code, p.partnumber, p.name
-	FROM vendor v
-	join product p on  v.ID=p.ProductId
-	*/
+	@Column(name="isPreApproved")
+	private boolean preApproved;
 	
 	public Vendor() {
-		
+		id = 0;
+		code = "";
+		name = "";
+		address = "";
+		city = "";
+		state = "";
+		zip = "";
+		phone = "";
+		email = "";
+		preApproved = false;
 	}
-	
-	public Vendor(int id, String code, String name, String address, String city, String state, String zip, String phone,
-			String email, boolean isPreApproved, boolean isActive) {
+
+/*	public Vendor(int id, String code, String name, String address, String city, String state, String zip, String phone,
+			String email, boolean preApproved) {
 		setId(id);
 		setCode(code);
 		setName(name);
@@ -77,9 +48,8 @@ public class Vendor {
 		setZip(zip);
 		setPhone(phone);
 		setEmail(email);
-		setPreApproved(isPreApproved);
-		setActive(isActive);
-	}
+		setpreApproved(preApproved);
+	}*/
 	public int getId() {
 		return id;
 	}
@@ -134,31 +104,17 @@ public class Vendor {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public boolean isPreApproved() {
-		return isPreApproved;
+	public boolean preApproved() {
+		return preApproved;
 	}
-	public void setPreApproved(boolean isPreApproved) {
-		this.isPreApproved = isPreApproved;
-	}
-	public boolean isActive() {
-		return isActive;
-	}
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
-	}
-	
-	public List<Product> getProducts() {
-		return products;
-	}
-	
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public void setpreApproved(boolean preApproved) {
+		this.preApproved = preApproved;
 	}
 	
 	@Override
 	public String toString() {
 		return "Vendor [id=" + id + ", code=" + code + ", name=" + name + ", address=" + address + ", city=" + city
 				+ ", state=" + state + ", zip=" + zip + ", phone=" + phone + ", email=" + email + ", isPreApproved="
-				+ isPreApproved + ", isActive=" + isActive + ", products=" + products + "]";
+				+ preApproved + "]";
 	}
 }
