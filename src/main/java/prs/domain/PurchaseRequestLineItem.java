@@ -4,10 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class PurchaseRequestLineItem {
@@ -17,19 +13,19 @@ public class PurchaseRequestLineItem {
 	private int id;
 	
 	private int purchaseRequestId;
-	private int productID;
+	private int productId;
 	private int quantity;
 	
 	public PurchaseRequestLineItem() {
 		id = 0;
 		purchaseRequestId = 0;
-		productID = 0;
+		productId = 0;
 		quantity = 0;
 	}
 	
 	public PurchaseRequestLineItem(int conPR, int conProductId, int conQuantity) {
 		id = conPR;
-		productID = conProductId;
+		productId = conProductId;
 		quantity = conQuantity;
 	} // note 'con' indicates constructor
 	
@@ -52,11 +48,11 @@ public class PurchaseRequestLineItem {
 	}
 
 	public int getProductID() {
-		return productID;
+		return productId;
 	}
 
-	public void setProductID(int productID) {
-		this.productID = productID;
+	public void setProductID(int productId) {
+		this.productId = productId;
 	}
 
 	public int getQuantity() {
@@ -69,8 +65,8 @@ public class PurchaseRequestLineItem {
 
 	@Override
 	public String toString() {
-		return "\npurchaseRequestLineItem [id=" + id + ", purchaseRequestID=" + purchaseRequestId + ", productID="
-				+ productID + ", quantity=" + quantity + "]";
+		return "purchaseRequestLineItem [id=" + id + ", purchaseRequestID=" + purchaseRequestId + ", productId="
+				+ productId + ", quantity=" + quantity + "]";
 	}
 	
 }

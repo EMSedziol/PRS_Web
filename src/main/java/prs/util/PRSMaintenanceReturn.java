@@ -1,7 +1,6 @@
 package prs.util;
 
 public class PRSMaintenanceReturn {
-
 	private String result;
 	private String message;
 	public static final String SUCCESS="success";
@@ -45,5 +44,6 @@ public class PRSMaintenanceReturn {
 			r.setMessage("Not found");
 		}
 		return r;
+
 	}
 }

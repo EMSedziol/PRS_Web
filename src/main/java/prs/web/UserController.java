@@ -1,10 +1,12 @@
 package prs.web;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +19,7 @@ import prs.domain.UserRepository;
 import prs.util.PRSMaintenanceReturn;
 
 
+@CrossOrigin
 @Controller
 @RequestMapping(path="/User")
 public class UserController extends BaseController{
@@ -31,7 +34,11 @@ public class UserController extends BaseController{
 	
 	@GetMapping(path="/Get") 
 	public @ResponseBody List<User> getUser (@RequestParam int id) {
+		ArrayList<User> users = new ArrayList<User>();
 		User u = userRepository.findOne(id);
+		if (u != null) {
+			users.add(u);
+		}
 		return getReturnArray(u);
 		//
 		// http://localhost:8080/User/Get?id=3
@@ -41,7 +48,6 @@ public class UserController extends BaseController{
 	@GetMapping(path="/Validate") // used in a post
 	public @ResponseBody List<User> validate (@RequestParam String userName,
 			@RequestParam String password) {
-		// @RequestParam means it is a parameter from the GET or POST request;
 		User u = userRepository.findByUserNameAndPassword(userName, password);
 		return getReturnArray(u);
 		//
@@ -50,16 +56,17 @@ public class UserController extends BaseController{
 	}
 	
 	@GetMapping(path="/Delete") 
-	public @ResponseBody String getDelete (@RequestParam int id) {
+	public @ResponseBody PRSMaintenanceReturn deleteUser (@RequestParam int id) {
+		User user = userRepository.findOne(id);
 		
-		String msg = "";
 		try {
-			userRepository.delete(id);
-			msg = "  id " + id + " was deleted";
+			userRepository.delete(user);
+			System.out.println("User Deleted: " + user);
 		} catch (EmptyResultDataAccessException exc) {
-			msg = "  id " + id + " was NOT deleted";			
+			System.out.println("User was NOT deleted " + user);	
+			user = null;
 		}
-		return msg;
+		return PRSMaintenanceReturn.getMaintReturn(user);
 		
 		//
 		// http://localhost:8080/User/Delete?id=78
@@ -85,4 +92,17 @@ public class UserController extends BaseController{
 		}
 		return PRSMaintenanceReturn.getMaintReturn(user);
 	}  
+	
+	@PostMapping(path="/Update") 
+	public @ResponseBody PRSMaintenanceReturn updateUser (@RequestBody User user) {
+		
+		try {
+			userRepository.save(user);
+			System.out.println("User updated: " + user);
+		} catch (EmptyResultDataAccessException exc) {
+			System.out.println("User was NOT updated " + user);	
+			user = null;
+		}
+		return PRSMaintenanceReturn.getMaintReturn(user);
+	}
 }

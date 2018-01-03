@@ -1,22 +1,12 @@
 package prs.domain;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 public class PurchaseRequest {
@@ -27,9 +17,9 @@ public class PurchaseRequest {
 
 	private int userId;
 	
-	private String description = "";
+	private String description;
 	
-	private String justification = "";
+	private String justification;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
 	private Timestamp dateNeeded;
