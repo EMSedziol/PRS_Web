@@ -19,8 +19,8 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	private int vendorId;
-	
+	private String vendorId;
+
 	private String partNumber;
 	
 	private String name;
@@ -30,29 +30,7 @@ public class Product {
 	private String unit;
 	
 	private String photopath;
-
-	public Product() {
-		id = 0;
-		vendorId = 0;
-		partNumber = "";
-		name = "";
-		price = 0.0;
-		unit = "";
-		photopath = "";
-		
-	}
 	
-	
-	public Product(int id, int vendorId, String partNumber, String name, 
-			double price, String unit, String photopath) {
-		this.id = id;
-		vendorId = 0;
-		partNumber = "";
-		name = "";
-		price = 0.0;
-		unit = "";
-		photopath = "";
-	}
 
 	public int getId() {
 		return id;
@@ -60,14 +38,6 @@ public class Product {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public int getVendorId() {
-		return vendorId;
-	}
-
-	public void setVendorId(int vendorId) {
-		this.vendorId = vendorId;
 	}
 
 	public String getPartNumber() {
@@ -110,11 +80,18 @@ public class Product {
 		this.photopath = photopath;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", vendorId=" + vendorId + ", partNumber=" + partNumber + ", name=" + name
 				+ ", price=" + price + ", unit=" + unit + ", photopath=" + photopath + "]";
+	}
+
+	public String getVendorId() {
+		return vendorId;
+	}
+
+	public void setVendorId(String vendorId) {
+		this.vendorId = vendorId;
 	}
 
 

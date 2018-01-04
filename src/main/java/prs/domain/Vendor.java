@@ -24,6 +24,22 @@ public class Vendor {
 	@Column(name="isPreApproved")
 	private boolean preApproved;
 	
+	
+	public Vendor(int id, String code, String name, String address, String city, String state, String zip, String phone,
+			String email, boolean preApproved) {
+		super();
+		this.id = id;
+		this.code = code;
+		this.name = name;
+		this.address = address;
+		this.city = city;
+		this.state = state;
+		this.zip = zip;
+		this.phone = phone;
+		this.email = email;
+		this.preApproved = preApproved;
+	}
+
 	public Vendor() {
 		id = 0;
 		code = "";
@@ -37,19 +53,6 @@ public class Vendor {
 		preApproved = false;
 	}
 
-/*	public Vendor(int id, String code, String name, String address, String city, String state, String zip, String phone,
-			String email, boolean preApproved) {
-		setId(id);
-		setCode(code);
-		setName(name);
-		setAddress(address);
-		setCity(city);
-		setState(state);
-		setZip(zip);
-		setPhone(phone);
-		setEmail(email);
-		setpreApproved(preApproved);
-	}*/
 	public int getId() {
 		return id;
 	}
