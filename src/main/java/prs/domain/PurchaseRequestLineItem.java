@@ -16,20 +16,16 @@ public class PurchaseRequestLineItem {
 	private int productId;
 	private int quantity;
 	
-	public PurchaseRequestLineItem() {
-		id = 0;
-		purchaseRequestId = 0;
-		productId = 0;
-		quantity = 0;
+
+	public PurchaseRequestLineItem() {}
+	
+
+	public PurchaseRequestLineItem(int id, int purchaseRequestId, int productId, int quantity) {
+		this.id = id;
+		this.purchaseRequestId = purchaseRequestId;
+		this.productId = productId;
+		this.quantity = quantity;
 	}
-	
-	public PurchaseRequestLineItem(int conPR, int conProductId, int conQuantity) {
-		id = conPR;
-		productId = conProductId;
-		quantity = conQuantity;
-	} // note 'con' indicates constructor
-	
-	
 
 	public int getId() {
 		return id;

@@ -3,6 +3,7 @@ package prs.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import prs.domain.User;
 import prs.domain.Vendor;
 import prs.domain.VendorRepository;
+import prs.util.PRSMaintenanceReturn;
 import prs.web.BaseController;
 
 @CrossOrigin
@@ -46,5 +49,17 @@ public class VendorController {
 		Vendor p = vendorRepository.findOne(id);
 		return BaseController.getReturnArray(p);
 	}
-	
+
+	@PostMapping(path="/Update") 
+	public @ResponseBody PRSMaintenanceReturn updateUser (@RequestBody Vendor vendor) {
+		
+		try {
+			vendorRepository.save(vendor);
+			System.out.println("vendor updated: " + vendor);
+		} catch (EmptyResultDataAccessException exc) {
+			System.out.println("Vendor was NOT updated " + vendor);	
+			vendor = null;
+		}
+		return PRSMaintenanceReturn.getMaintReturn(vendor);
+	}
 }

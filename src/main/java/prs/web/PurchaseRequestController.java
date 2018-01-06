@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +18,7 @@ import prs.domain.PurchaseRequestLineItemRepository;
 import prs.domain.PurchaseRequestRepository;
 import prs.domain.PurchaseRequest;
 
+@CrossOrigin
 @Controller
 @RequestMapping(path="/PR")
 public class PurchaseRequestController extends BaseController {
@@ -55,7 +57,7 @@ public class PurchaseRequestController extends BaseController {
 	}
 	
 	@PostMapping(path="/Update") 
-	public @ResponseBody PRSMaintenanceReturn updateUser (@RequestBody PurchaseRequest purchaseRequest) {
+	public @ResponseBody PRSMaintenanceReturn updatePurchaseRequest (@RequestBody PurchaseRequest purchaseRequest) {
 		try {
 			purchaserequestRepository.save(purchaseRequest);
 			System.out.println("PurchaseRequest updated:  "+purchaseRequest);

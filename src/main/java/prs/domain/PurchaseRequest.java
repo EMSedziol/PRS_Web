@@ -1,6 +1,8 @@
 package prs.domain;
 
 import java.sql.Timestamp;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -33,6 +35,29 @@ public class PurchaseRequest {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
 	private Timestamp submittedDate;  // not entered  by the user
 	
+	private String reasonForRejection;
+	
+	@Column(name="IsActive")
+	private boolean active;
+	
+	public PurchaseRequest(int id, int userId, String description, String justification, Timestamp dateNeeded,
+			String deliveryMode, int statusId, double total, Timestamp submittedDate, String reasonForRejection,
+			boolean active) {
+		super();
+		this.id = id;
+		this.userId = userId;
+		this.description = description;
+		this.justification = justification;
+		this.dateNeeded = dateNeeded;
+		this.deliveryMode = deliveryMode;
+		this.statusId = statusId;
+		this.total = total;
+		this.submittedDate = submittedDate;
+		this.reasonForRejection = reasonForRejection;
+		this.active = active;
+	}
+
+
 	public PurchaseRequest() {
 		id = 0;
 		userId = 0;
@@ -43,8 +68,11 @@ public class PurchaseRequest {
 		statusId = 0;
 		total = 0.0;
 		submittedDate = new Timestamp(System.currentTimeMillis());
+		reasonForRejection = "";
+		active = true;
+		
 	}
-	
+/*
 	public PurchaseRequest(int conId, int conUserId, String conDescription, String conJustification, Timestamp conDateNeeded,
 			String conDeliveryMode, int conStatusId, double conTotal, Timestamp conSubmittedDate) {
 		id = conId;
@@ -56,7 +84,7 @@ public class PurchaseRequest {
 		statusId = conStatusId;
 		total = conTotal;
 		submittedDate = conSubmittedDate;
-	}
+	}  */
 
 	public int getId() {
 		return id;
@@ -128,6 +156,22 @@ public class PurchaseRequest {
 
 	public void setSubmittedDate(Timestamp submittedDate) {
 		this.submittedDate = submittedDate;
+	}
+
+	public String getReasonForRejection() {
+		return reasonForRejection;
+	}
+
+	public void setReasonForRejection(String reasonForRejection) {
+		this.reasonForRejection = reasonForRejection;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 	@Override

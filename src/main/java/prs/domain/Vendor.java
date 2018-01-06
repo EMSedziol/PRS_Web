@@ -23,10 +23,12 @@ public class Vendor {
 	private String email;
 	@Column(name="isPreApproved")
 	private boolean preApproved;
+	@Column(name="IsActive")
+	private boolean active;
 	
 	
 	public Vendor(int id, String code, String name, String address, String city, String state, String zip, String phone,
-			String email, boolean preApproved) {
+			String email, boolean preApproved, boolean active) {
 		super();
 		this.id = id;
 		this.code = code;
@@ -38,6 +40,7 @@ public class Vendor {
 		this.phone = phone;
 		this.email = email;
 		this.preApproved = preApproved;
+		this.active = active;
 	}
 
 	public Vendor() {
@@ -51,6 +54,7 @@ public class Vendor {
 		phone = "";
 		email = "";
 		preApproved = false;
+		active = true;
 	}
 
 	public int getId() {
@@ -114,10 +118,20 @@ public class Vendor {
 		this.preApproved = preApproved;
 	}
 	
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 	@Override
 	public String toString() {
 		return "Vendor [id=" + id + ", code=" + code + ", name=" + name + ", address=" + address + ", city=" + city
-				+ ", state=" + state + ", zip=" + zip + ", phone=" + phone + ", email=" + email + ", isPreApproved="
-				+ preApproved + "]";
+				+ ", state=" + state + ", zip=" + zip + ", phone=" + phone + ", email=" + email + ", preApproved="
+				+ preApproved + ", active=" + active + "]";
 	}
+
+
 }

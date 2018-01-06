@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,11 +18,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import prs.domain.PurchaseRequestLineItemRepository;
+import prs.domain.PurchaseRequest;
 import prs.domain.PurchaseRequestLineItem;
 import prs.util.PRSMaintenanceReturn;
 
+@CrossOrigin
 @Controller
-@RequestMapping(path="/PRLineItem")
+@RequestMapping(path="/PRLI")
 
 public class PurchaseRequestLineItemController extends BaseController {
 
@@ -63,6 +66,19 @@ public class PurchaseRequestLineItemController extends BaseController {
 		PurchaseRequestLineItem purchaseRequestLineItem = purchaseRequestLineItemRepository.findOne(id);
 		purchaseRequestLineItemRepository.delete(purchaseRequestLineItem);
 		return purchaseRequestLineItem;
+	}
+	
+	@GetMapping(path="/Remove") 
+	public @ResponseBody PRSMaintenanceReturn deletePurchaseRequest (@RequestParam int id) {
+		PurchaseRequestLineItem purchaseRequestLineItem = purchaseRequestLineItemRepository.findOne(id);
+		try {
+			purchaseRequestLineItemRepository.delete(purchaseRequestLineItem);
+			System.out.println("PurchaseRequest saved:  "+purchaseRequestLineItem);
+		}
+		catch (Exception e) {
+			purchaseRequestLineItem = null;
+		}
+		return PRSMaintenanceReturn.getMaintReturn(purchaseRequestLineItem);
 	}
 	
 }

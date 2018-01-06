@@ -3,7 +3,9 @@ package prs.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +18,7 @@ import prs.domain.ProductRepository;
 import prs.domain.User;
 import prs.util.PRSMaintenanceReturn;
 
+@CrossOrigin
 @Controller
 @RequestMapping(path="/Product")
 public class ProductController extends BaseController  {
@@ -46,30 +49,32 @@ public class ProductController extends BaseController  {
 		return PRSMaintenanceReturn.getMaintReturn(product);
 	}
 	
-	/*@GetMapping(path="/Delete")
-	public @ResponseBody String getDelete(@RequestParam int id) {
+	@PostMapping(path="/Update") 
+	public @ResponseBody PRSMaintenanceReturn updateUser (@RequestBody Product product) {
 		
-		String msg = "";
 		try {
-			productRepository.delete(id);
-			msg = "  id " + id + " was deleted";
+			productRepository.save(product);
+			System.out.println("Product updated: " + product);
+		} catch (EmptyResultDataAccessException exc) {
+			System.out.println("Product was NOT updated " + product);	
+			product = null;
 		}
-		catch (EmptyResultDataAccessException exc) {
-			msg = "  id " + id + " was NOT deleted";
-		}
-		return msg;
+		return PRSMaintenanceReturn.getMaintReturn(product);
 	}
 	
-	@PostMapping(path="/Add") // Map ONLY POST Requests
-    public @ResponseBody Product addNewProduct (@RequestBody Product product) {
-        // @ResponseBody means the returned String is the response, not a view name
-        // @RequestParam means it is a parameter from the GET or POST request
-		// 
-		// http://localhost:8080/Product/Add  - used in Postman
-		//
-        productRepository.save(product);
-        System.out.println("Product saved:  "+product);
-        return product;
-    }
-*/
+	@GetMapping(path="/Delete") 
+	public @ResponseBody PRSMaintenanceReturn deleteProduct (@RequestParam int id) {
+		Product product = productRepository.findOne(id);
+		
+		try {
+			productRepository.delete(product);
+			System.out.println("Product Deleted: " + product);
+		} catch (EmptyResultDataAccessException exc) {
+			System.out.println("Product was NOT deleted " + product);	
+			product = null;
+		}
+		return PRSMaintenanceReturn.getMaintReturn(product);
+
+	}
+
 }
