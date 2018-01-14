@@ -7,8 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity
 public class PurchaseRequest {
@@ -23,16 +25,19 @@ public class PurchaseRequest {
 	
 	private String justification;
 	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Timestamp dateNeeded;
 	
 	private String deliveryMode;
 	
 	private int statusId;
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@Transient
+	private String statusDesc;
 	
 	private double total;
 	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Timestamp submittedDate;  // not entered  by the user
 	
 	private String reasonForRejection;
@@ -137,11 +142,17 @@ public class PurchaseRequest {
 	public int getStatusId() {
 		return statusId;
 	}
-
 	public void setStatusId(int statusId) {
 		this.statusId = statusId;
 	}
+	public String getStatusDesc() {
+		return statusDesc;
+	}
 
+	public void setStatusDesc(String statusDesc) {
+		this.statusDesc = statusDesc;
+	}
+	
 	public double getTotal() {
 		return total;
 	}

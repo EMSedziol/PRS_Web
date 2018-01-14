@@ -20,7 +20,7 @@ public class PurchaseRequestLineItem {
 	public PurchaseRequestLineItem() {}
 	
 
-	public PurchaseRequestLineItem(int id, int purchaseRequestId, int productId, int quantity) {
+	public PurchaseRequestLineItem(int id, int purchaseRequestId, int productId, int quantity, int purchaseRequestID) {
 		this.id = id;
 		this.purchaseRequestId = purchaseRequestId;
 		this.productId = productId;
@@ -43,11 +43,11 @@ public class PurchaseRequestLineItem {
 		this.purchaseRequestId = purchaseRequestId;
 	}
 
-	public int getProductID() {
+	public int getProductId() {
 		return productId;
 	}
 
-	public void setProductID(int productId) {
+	public void setProductId(int productId) {
 		this.productId = productId;
 	}
 
@@ -59,10 +59,15 @@ public class PurchaseRequestLineItem {
 		this.quantity = quantity;
 	}
 
+
 	@Override
 	public String toString() {
-		return "purchaseRequestLineItem [id=" + id + ", purchaseRequestID=" + purchaseRequestId + ", productId="
-				+ productId + ", quantity=" + quantity + "]";
+		return "PurchaseRequestLineItem [id=" + id 
+				+ ", purchaseRequestId=" + purchaseRequestId 
+				+ ", productId=" + productId + ", quantity=" 
+				+ quantity + "]";
 	}
+
+
 	
 }

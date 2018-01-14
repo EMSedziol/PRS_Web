@@ -46,4 +46,22 @@ public class PRSMaintenanceReturn {
 		return r;
 
 	}
+
+	/*
+	 * Get a maintenance return obj and include a message
+	 */
+	public static PRSMaintenanceReturn getMaintReturn(Object obj, String msg) {
+		PRSMaintenanceReturn r = new PRSMaintenanceReturn();
+		if (obj!=null) {
+			r.setResult(SUCCESS);
+			r.setMessage(obj.getClass().getSimpleName()+" maintenance success");
+		}
+		else {
+			r.setResult(FAILURE);
+			// Can't use obj.getClass() because obj is null
+			r.setMessage("msg");
+		}
+		return r;
+
+	}
 }

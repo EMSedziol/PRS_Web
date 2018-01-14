@@ -1,6 +1,7 @@
 package prs.web;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import prs.domain.PurchaseRequestLineItemRepository;
+import prs.domain.PurchaseRequestRepository;
+import prs.domain.Product;
+import prs.domain.ProductRepository;
 import prs.domain.PurchaseRequest;
 import prs.domain.PurchaseRequestLineItem;
 import prs.util.PRSMaintenanceReturn;
@@ -29,56 +33,81 @@ import prs.util.PRSMaintenanceReturn;
 public class PurchaseRequestLineItemController extends BaseController {
 
 	@Autowired
-	private PurchaseRequestLineItemRepository purchaseRequestLineItemRepository;
+	private PurchaseRequestLineItemRepository prliRepository;
+	@Autowired
+	private PurchaseRequestRepository prRepository;
+	@Autowired
+	private ProductRepository prodRepository;
 	
 	@GetMapping(path="/List")
 	public @ResponseBody Iterable<PurchaseRequestLineItem> getAllLineItems() {
 		// This returns a JSON or XML with the users
-		return purchaseRequestLineItemRepository.findAll();
+		return prliRepository.findAll();
 	}
 	
 	@GetMapping(path="/Get") 
 	public @ResponseBody List<PurchaseRequestLineItem> getPurchaseRequestLineItem (@RequestParam int id) {
-		PurchaseRequestLineItem prli = purchaseRequestLineItemRepository.findOne(id);
+		PurchaseRequestLineItem prli = prliRepository.findOne(id);
 		return getReturnArray(prli);
 
 	}
  
 	@PostMapping(path="/Add")
-	public @ResponseBody PRSMaintenanceReturn addNewPurchaseRequestLineItem (@RequestBody PurchaseRequestLineItem purchaseRequestLineItem,
+	public @ResponseBody PRSMaintenanceReturn addNewPurchaseRequestLineItem (@RequestBody PurchaseRequestLineItem prli,
 			HttpServletRequest req) {
+		String msg = "";
+		PRSMaintenanceReturn ret;
 		try {
-			purchaseRequestLineItemRepository.save(purchaseRequestLineItem);
-			System.out.println("PurchaseRequestLineItem added:  "+purchaseRequestLineItem);
+			System.out.println("Trying to save prli: "+prli.toString());
+			prliRepository.save(prli);
+			System.out.println("PurchaseRequestLineItem added:  "+prli);
+			ret = PRSMaintenanceReturn.getMaintReturn(prli);
+			// now update the PR total
+			updateRequestTotal(prli);
 		}
 		catch (Exception e) {
-			purchaseRequestLineItem = null;
-			System.out.println("error" + e);
+			e.printStackTrace();
+			msg = e.getMessage();
+			prli = null;
+			ret = PRSMaintenanceReturn.getMaintReturn(null,msg);
 		}
-		System.out.println("PurchaseRequestLineItem saved:  "+purchaseRequestLineItem);
-		return PRSMaintenanceReturn.getMaintReturn(purchaseRequestLineItem);
+		return ret;
 	}
 	
 	@GetMapping(path="/Delete") // Map ONLY GET Requests
-	public @ResponseBody PurchaseRequestLineItem deletePurchaseRequestLineItem (@RequestParam int id) {
-		// @ResponseBody means the returned String is the response, not a view name
-		// @RequestParam means it is a parameter from the GET or POST request
-		PurchaseRequestLineItem purchaseRequestLineItem = purchaseRequestLineItemRepository.findOne(id);
-		purchaseRequestLineItemRepository.delete(purchaseRequestLineItem);
-		return purchaseRequestLineItem;
-	}
-	
-	@GetMapping(path="/Remove") 
-	public @ResponseBody PRSMaintenanceReturn deletePurchaseRequest (@RequestParam int id) {
-		PurchaseRequestLineItem purchaseRequestLineItem = purchaseRequestLineItemRepository.findOne(id);
+	public @ResponseBody PRSMaintenanceReturn deletePurchaseRequestLineItem (@RequestParam int id) {
+		PurchaseRequestLineItem prli = prliRepository.findOne(id);
 		try {
-			purchaseRequestLineItemRepository.delete(purchaseRequestLineItem);
-			System.out.println("PurchaseRequest saved:  "+purchaseRequestLineItem);
+			prliRepository.delete(prli);
+			System.out.println("PurchaseRequestLineItem removed:  "+prli);
+			// now update the PR total
+			updateRequestTotal(prli);
 		}
 		catch (Exception e) {
-			purchaseRequestLineItem = null;
+			prli = null;
 		}
-		return PRSMaintenanceReturn.getMaintReturn(purchaseRequestLineItem);
+		return PRSMaintenanceReturn.getMaintReturn(prli);
 	}
 	
+	@GetMapping(path="/LinesForPR")
+	   public @ResponseBody Iterable<PurchaseRequestLineItem> getAllLineItemsForPR(@RequestParam int id) {
+	       // This returns a JSON or XML with the users
+		// http://localhost:8080/PRLI/LinesForPR?id=12
+	       return prliRepository.findAllByPurchaseRequestId(id);
+	   }
+	
+	private void updateRequestTotal(PurchaseRequestLineItem prli) throws Exception {
+		PurchaseRequest pr = prRepository.findOne(prli.getPurchaseRequestId());
+		List<PurchaseRequestLineItem> lines = new ArrayList<>();
+		lines = prliRepository.findAllByPurchaseRequestId(pr.getId());
+		double total = 0;
+		for (PurchaseRequestLineItem line: lines) {
+			Product p = prodRepository.findOne(line.getProductId());
+			double lineTotal = line.getQuantity()*p.getPrice();
+			total += lineTotal;
+		}
+		pr.setTotal(total);
+		prRepository.save(pr);
+	}
+
 }

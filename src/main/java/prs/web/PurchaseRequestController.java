@@ -1,6 +1,7 @@
 package prs.web;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import prs.util.PRSMaintenanceReturn;
-import prs.domain.PurchaseRequestLineItemRepository;
 import prs.domain.PurchaseRequestRepository;
+import prs.domain.Status;
+import prs.domain.StatusRepository;
 import prs.domain.PurchaseRequest;
+import prs.domain.PurchaseRequestLineItem;
+import prs.domain.PurchaseRequestLineItemRepository;
 
 @CrossOrigin
 @Controller
@@ -25,10 +29,10 @@ public class PurchaseRequestController extends BaseController {
 
 	@Autowired
 	private PurchaseRequestRepository purchaserequestRepository;
-/*	
+	
 	@Autowired
 	private PurchaseRequestLineItemRepository purchaseRequestLineItemRepository;
-	*/
+
 	@GetMapping(path="/Get") 
 	public @ResponseBody List<PurchaseRequest> getPurchaseRequest (@RequestParam int id) {
 		PurchaseRequest pr = purchaserequestRepository.findOne(id);
@@ -36,8 +40,10 @@ public class PurchaseRequestController extends BaseController {
 	}
 	
 	@GetMapping(path="/List")
-	public @ResponseBody Iterable<PurchaseRequest> getAllPRs() {
-		return purchaserequestRepository.findAll();
+	public @ResponseBody Iterable<PurchaseRequest> getAllPurchaseRequests() {
+		// This returns a JSON or XML with the users
+		Iterable<PurchaseRequest> allPRs = purchaserequestRepository.findAll();
+		return allPRs;
 	}
 	
 	@PostMapping(path="/Add")
@@ -80,6 +86,12 @@ public class PurchaseRequestController extends BaseController {
 			purchaseRequest = null;
 		}
 		return PRSMaintenanceReturn.getMaintReturn(purchaseRequest);
+	}
+
+
+	private List<PurchaseRequestLineItem> findAllByPurchaseRequestId(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
