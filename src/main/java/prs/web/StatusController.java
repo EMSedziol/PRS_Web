@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import prs.domain.Status;
 import prs.domain.StatusRepository;
 
-import prs.util.PRSMaintenanceReturn;
-
 @CrossOrigin
 @Controller
 @RequestMapping(path="/Status")

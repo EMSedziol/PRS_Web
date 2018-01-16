@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import prs.domain.User;
 import prs.domain.Vendor;
 import prs.domain.VendorRepository;
 import prs.util.PRSMaintenanceReturn;
@@ -51,7 +50,7 @@ public class VendorController {
 	}
 
 	@PostMapping(path="/Update") 
-	public @ResponseBody PRSMaintenanceReturn updateUser (@RequestBody Vendor vendor) {
+	public @ResponseBody PRSMaintenanceReturn updateVendor (@RequestBody Vendor vendor) {
 		
 		try {
 			vendorRepository.save(vendor);

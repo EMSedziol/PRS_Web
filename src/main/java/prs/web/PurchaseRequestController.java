@@ -1,7 +1,6 @@
 package prs.web;
 
 import java.sql.Timestamp;
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import prs.util.PRSMaintenanceReturn;
 import prs.domain.PurchaseRequestRepository;
-import prs.domain.Status;
-import prs.domain.StatusRepository;
 import prs.domain.PurchaseRequest;
 import prs.domain.PurchaseRequestLineItem;
 import prs.domain.PurchaseRequestLineItemRepository;
@@ -30,8 +27,8 @@ public class PurchaseRequestController extends BaseController {
 	@Autowired
 	private PurchaseRequestRepository purchaserequestRepository;
 	
-	@Autowired
-	private PurchaseRequestLineItemRepository purchaseRequestLineItemRepository;
+//	@Autowired
+//	private PurchaseRequestLineItemRepository purchaseRequestLineItemRepository;
 
 	@GetMapping(path="/Get") 
 	public @ResponseBody List<PurchaseRequest> getPurchaseRequest (@RequestParam int id) {
@@ -41,7 +38,7 @@ public class PurchaseRequestController extends BaseController {
 	
 	@GetMapping(path="/List")
 	public @ResponseBody Iterable<PurchaseRequest> getAllPurchaseRequests() {
-		// This returns a JSON or XML with the users
+		// This returns a JSON or XML with the purchaserequests
 		Iterable<PurchaseRequest> allPRs = purchaserequestRepository.findAll();
 		return allPRs;
 	}

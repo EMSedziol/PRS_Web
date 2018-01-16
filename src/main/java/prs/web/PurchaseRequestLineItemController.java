@@ -1,6 +1,5 @@
 package prs.web;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import prs.domain.PurchaseRequestLineItemRepository;
 import prs.domain.PurchaseRequestRepository;
@@ -41,7 +38,7 @@ public class PurchaseRequestLineItemController extends BaseController {
 	
 	@GetMapping(path="/List")
 	public @ResponseBody Iterable<PurchaseRequestLineItem> getAllLineItems() {
-		// This returns a JSON or XML with the users
+		// This returns a JSON or XML with the purchase request line items
 		return prliRepository.findAll();
 	}
 	
@@ -91,7 +88,7 @@ public class PurchaseRequestLineItemController extends BaseController {
 	
 	@GetMapping(path="/LinesForPR")
 	   public @ResponseBody Iterable<PurchaseRequestLineItem> getAllLineItemsForPR(@RequestParam int id) {
-	       // This returns a JSON or XML with the users
+	       // This returns a JSON or XML with the purchase request line items
 		// http://localhost:8080/PRLI/LinesForPR?id=12
 	       return prliRepository.findAllByPurchaseRequestId(id);
 	   }

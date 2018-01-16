@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import prs.domain.Product;
 import prs.domain.ProductRepository;
-import prs.domain.User;
 import prs.util.PRSMaintenanceReturn;
 
 @CrossOrigin
@@ -41,16 +40,16 @@ public class ProductController extends BaseController  {
 	public @ResponseBody PRSMaintenanceReturn addNewProduct (@RequestBody Product product) {
 		try {
 			productRepository.save(product);
-			System.out.println("User has been saved " + product);
+			System.out.println("Product has been saved " + product);
 		} catch (Exception e) {
 			product = null;
-			System.out.println("User saved:  "+ product);
+			System.out.println("Product saved:  "+ product);
 		}
 		return PRSMaintenanceReturn.getMaintReturn(product);
 	}
 	
 	@PostMapping(path="/Update") 
-	public @ResponseBody PRSMaintenanceReturn updateUser (@RequestBody Product product) {
+	public @ResponseBody PRSMaintenanceReturn updateProduct (@RequestBody Product product) {
 		
 		try {
 			productRepository.save(product);
