@@ -36,6 +36,14 @@ public class PurchaseRequestController extends BaseController {
 		return getReturnArray(pr);
 	}
 	
+	@GetMapping(path="/PRList") 
+	public @ResponseBody Iterable<PurchaseRequest> getPurchaseRequestnotinclUser (@RequestParam int id) {
+		// the following will pull all PR's not entered by user 1
+		// http://localhost:8080/PR/PRList?id=1
+		Iterable<PurchaseRequest> PRUsers = purchaserequestRepository.findByUserIdNot(id);
+		return PRUsers;
+	}
+	
 	@GetMapping(path="/List")
 	public @ResponseBody Iterable<PurchaseRequest> getAllPurchaseRequests() {
 		// This returns a JSON or XML with the purchaserequests
@@ -84,7 +92,6 @@ public class PurchaseRequestController extends BaseController {
 		}
 		return PRSMaintenanceReturn.getMaintReturn(purchaseRequest);
 	}
-
 
 	private List<PurchaseRequestLineItem> findAllByPurchaseRequestId(int id) {
 		// TODO Auto-generated method stub
